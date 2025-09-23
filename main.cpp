@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <windows.h>  // Для SetConsoleOutputCP
 
 struct Student {
     std::string name;
@@ -36,7 +37,12 @@ void displayStudents(const std::vector<Student>& database) {
     }
 }
 
+int countStudents(const std::vector<Student>& database) {
+    return static_cast<int>(database.size());
+}
+
 int main() {
+    SetConsoleOutputCP(CP_UTF8);  // Устанавливает кодировку вывода UTF-8
     std::vector<Student> database;
 
     int choice;
@@ -44,6 +50,7 @@ int main() {
         std::cout << "Меню:\n";
         std::cout << "1. Добавить студента\n";
         std::cout << "2. Вывести список студентов\n";
+        std::cout << "3. Показать количество студентов\n";
         std::cout << "0. Выход\n";
         std::cout << "Выберите действие: ";
         std::cin >> choice;
@@ -54,6 +61,9 @@ int main() {
                 break;
             case 2:
                 displayStudents(database);
+                break;
+            case 3:
+                std::cout << "Количество студентов в базе данных: " << countStudents(database) << "\n";
                 break;
             case 0:
                 std::cout << "Выход из программы.\n";
