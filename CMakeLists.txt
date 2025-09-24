@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.14)
 project(TestDatabase)
 
+cmake_policy(SET CMP0135 NEW)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -9,10 +11,8 @@ include(FetchContent)
 FetchContent_Declare(
     googletest
     URL https://github.com/google/googletest/archive/release-1.14.0.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
 )
-
-# Для Windows (если нужно) принудительно используем общие сборки CRT
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
