@@ -1,15 +1,26 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.14)
 project(TestDatabase)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-enable_testing()
+include(FetchContent)
 
-find_package(GTest CONFIG REQUIRED)
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/release-1.14.0.zip
+)
+
+# Для Windows (если нужно) принудительно используем общие сборки CRT
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(googletest)
+
+enable_testing()
 
 add_executable(test_database test_database.cpp)
 
-target_link_libraries(test_database PRIVATE GTest::gtest GTest::gtest_main pthread)
+target_link_libraries(test_database PRIVATE gtest_main)
 
-add_test(NAME test_database COMMAND test_database)
+include(GoogleTest)
+gtest_discover_tests(test_database)
