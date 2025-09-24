@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install dependencies
+    - name: Install build dependencies
       run: sudo apt update && sudo apt install -y g++ cmake
 
     - name: Download GoogleTest sources
