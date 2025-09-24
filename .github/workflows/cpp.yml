@@ -13,17 +13,19 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y g++ cmake libgtest-dev
+    - name: Install build dependencies
+      run: sudo apt update && sudo apt install -y g++ cmake
+
+    - name: Download GoogleTest sources
+      run: git clone https://github.com/google/googletest.git $HOME/googletest-src
 
     - name: Build GoogleTest
       run: |
-        cd /usr/src/gtest
-        sudo cmake .
-        sudo make
-        sudo cp *.a /usr/lib
+        mkdir -p $HOME/gtest_build
+        cd $HOME/gtest_build
+        cmake $HOME/googletest-src
+        make
+        sudo cp lib/*.a /usr/lib/
 
     - name: Configure Project
       run: cmake -S . -B build
